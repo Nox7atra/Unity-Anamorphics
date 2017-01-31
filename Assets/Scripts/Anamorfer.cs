@@ -14,6 +14,7 @@ public class Anamorfer : MonoBehaviour
     public void CreateLinearAnamorfedMesh()
     {
         GameObject anamorfedGo = new GameObject();
+        anamorfedGo.name = "Result";
         var fitler = anamorfedGo.AddComponent<MeshFilter>();
         var renderer = anamorfedGo.AddComponent<MeshRenderer>();
         renderer.material = _ImageMaterial;
@@ -24,7 +25,7 @@ public class Anamorfer : MonoBehaviour
         for (int i = 0; i < verts.Length; i++)
         {
             verts[i] = GetIntersectionOfLineAndPlane(
-                _ImageMesh.sharedMesh.vertices[i],
+                _ImageMesh.sharedMesh.vertices[i] + _ImageMesh.transform.position,
                 _PlayerPosition.position,
                 Vector3.forward,
                 Vector3.forward + Vector3.right,
@@ -37,6 +38,7 @@ public class Anamorfer : MonoBehaviour
         mesh.triangles = _ImageMesh.sharedMesh.triangles;
         fitler.sharedMesh = mesh;
     }
+
     private Vector3 GetIntersectionOfLineAndPlane(
         Vector3 linePoint1, 
         Vector3 linePoint2,
